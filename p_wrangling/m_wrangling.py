@@ -9,8 +9,21 @@ def jobs_to_dict(rural):
     job_codes_list = list(rural['normalized_job_code'].dropna().unique())
     return {job: response_api(job) for job in job_codes_list}
 
+def rural_column(rural):
+    rural['rural'] = rural['rural'].str.lower()
+    rural['rural'] = rural['rural'].str.replace('city', 'urban')\
+        .replace('non-rural','urban')\
+        .replace('countryside', 'rural')\
+        .replace('country', 'rural')
+    return rural
+
+
 def wrangling(rural):
     print('Transforming job codes...')
-    rural['normalized_job_code'] = rural['normalized_job_code'].apply(lambda job: jobs_to_dict(rural).get(job)
+    jobs_dict = jobs_to_dict(rural)
+    rural['normalized_job_code'] = rural['normalized_job_code'].apply(lambda job: jobs_dict.get(job))
     print('Transformation successful of job codes to names.')
-    return rural
+    print(rural)
+    rural_column_clean = rural_column(rural)
+    print(rural)
+    return rural_column_clean
