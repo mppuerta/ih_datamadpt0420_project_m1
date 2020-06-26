@@ -4,6 +4,7 @@ from p_wrangling import m_wrangling as mwr
 #from p_analysis import m_analysis as man
 #from p_reporting import m_reporting as mre
 
+
 def argument_parser():
     parser = argparse.ArgumentParser(description='specify inputs')
     parser.add_argument('-p', '--path', type=str, help='specify .db database path', required=True)
@@ -13,7 +14,7 @@ def argument_parser():
 
 def main(arguments):
     rural = mac.acquire(arguments.path)
-    mwr.wrangling(rural)
+    print(mwr.wrangling(rural))
 
 
 if __name__ == '__main__':

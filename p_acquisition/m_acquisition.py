@@ -2,7 +2,6 @@ import pandas as pd
 from sqlalchemy.pool import StaticPool
 from sqlalchemy import create_engine
 
-# acquisition functions
 
 def acquire(path):
     engine = create_engine(f'sqlite:///{path}', poolclass = StaticPool)
@@ -14,9 +13,6 @@ def acquire(path):
     con = engine)
     raw_rural.to_csv('data/raw/raw_rural_info.csv', index = False)
     return raw_rural
-
-
-
 
 
 
