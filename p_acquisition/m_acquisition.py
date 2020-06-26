@@ -11,6 +11,8 @@ def acquire(path):
     from country_info\
     join career_info\
     on career_info.uuid = country_info.uuid',
-                            con=engine)
+    con=engine)
     raw_rural.to_csv('data/raw/raw_rural_info.csv', index=False)
     return raw_rural
+
+

@@ -1,4 +1,5 @@
 import requests
+import pandas as pd
 
 # Function to build the API and make requests. Input: string, job code. Output: string, job name.
 def response_api(job_code):
@@ -6,7 +7,7 @@ def response_api(job_code):
 
 
 # Function to clean job_title column. It gets a dictionary containing every unique job code in the df. Its keys are
-# job codes and its values are job names and iterates over the column.
+# job codes, its values are job names it iterates over the column.
 def jobs_column(rural):
     job_codes_list = list(rural['normalized_job_code'].dropna().unique())
     jobs_dict = {job: response_api(job) for job in job_codes_list}
@@ -14,7 +15,7 @@ def jobs_column(rural):
     return rural
 
 
-# Function to clean rural column. The aim is to get only to values: 'rural' or 'urban'.
+# Function to clean rural column. The aim is to get only two values: 'rural' or 'urban'.
 def rural_column(rural):
     rural['rural'] = rural['rural'].str.lower()
     rural['rural'] = rural['rural'].str.replace('city', 'urban')\
@@ -28,3 +29,4 @@ def wrangling(rural):
     jobs_column(rural)
     rural_column(rural)
     return rural
+
