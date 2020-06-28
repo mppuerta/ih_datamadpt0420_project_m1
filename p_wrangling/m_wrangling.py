@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-import lxml.html as lh
+import pandas as pd
 import re
 
 # Function to build the API and make requests. Input: string, job code. Output: string, job name.
@@ -57,6 +57,8 @@ def wrangling(rural):
     rural_jobs_clean = jobs_column(rural)
     rural_rural_clean = rural_column(rural_jobs_clean)
     rural_countries_clean = countries_clean(rural_rural_clean)
+    rural_countries_clean.to_csv('data/processed/clean_rural_info.csv', index=False)
+    print('Processed data exported to csv')
     return rural_countries_clean
 
 

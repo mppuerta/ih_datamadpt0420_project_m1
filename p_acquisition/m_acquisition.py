@@ -14,7 +14,7 @@ def acquire(path):
     on career_info.uuid = country_info.uuid",
     con=engine)
     raw_rural.to_csv('data/raw/raw_rural_info.csv', index=False)
-    print('Database connected')
+    print('Database connected and csv exported')
     return raw_rural
 
 
