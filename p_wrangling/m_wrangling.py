@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-import pandas as pd
 import re
 
 # Function to build the API and make requests. Input: string, job code. Output: string, job name.
@@ -31,11 +30,15 @@ def rural_column(rural):
     return rural
 
 
+# Function to clean the imported html table.
 def cleaning_list(name):
     name1 = re.sub('<td>', '', str(name))
     name2 = re.sub('</td>', '', str(name1))
     return name2
 
+
+# Function to import a table via web scrapping, get a dictionary of the info needed to clean the countries column and
+# to clean that column.
 def countries_dict():
     html = requests.get('https://iban.com/country-codes').content
     soup = BeautifulSoup(html, 'lxml')
@@ -45,6 +48,8 @@ def countries_dict():
     table_dict = {clean_table_list[i + 1]: clean_table_list[i] for i in range(0, len(clean_table_list), 4)}
     return table_dict
 
+
+# Function to clean the rural column.
 def countries_clean(rural):
     print('Cleaning countries column...')
     countr_dict = countries_dict()

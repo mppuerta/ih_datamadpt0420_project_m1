@@ -1,7 +1,7 @@
 import argparse
 from p_acquisition import m_acquisition as mac
 from p_wrangling import m_wrangling as mwr
-#from p_analysis import m_analysis as man
+from p_analysis import m_analysis as man
 #from p_reporting import m_reporting as mre
 
 
@@ -14,7 +14,8 @@ def argument_parser():
 
 def main(arguments):
     rural = mac.acquire(arguments.path)
-    print(mwr.wrangling(rural))
+    rural_processed = mwr.wrangling(rural)
+    print(man.analyze(rural_processed))
 
 
 if __name__ == '__main__':

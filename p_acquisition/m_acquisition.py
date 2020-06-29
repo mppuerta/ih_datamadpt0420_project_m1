@@ -8,7 +8,8 @@ def acquire(path):
     print('Connecting database...')
     engine = create_engine(f'sqlite:///{path}', poolclass=StaticPool)
     raw_rural = pd.read_sql("select\
-    country_info.country_code as 'Country', career_info.normalized_job_code as 'Job_name', country_info.rural as 'Rural'\
+    country_info.country_code as 'Country', career_info.normalized_job_code as 'Job_name',\
+    country_info.rural as 'Rural', country_info.uuid as 'Quantity'\
     from country_info\
     join career_info\
     on career_info.uuid = country_info.uuid",
