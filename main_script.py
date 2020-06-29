@@ -7,7 +7,7 @@ from p_analysis import m_analysis as man
 
 def argument_parser():
     parser = argparse.ArgumentParser(description='specify inputs')
-    parser.add_argument('-c', '--country', type=str, help='filter by country or type All', required=True)
+    parser.add_argument('-c', '--country', type=str, help='filter by country')
     args = parser.parse_args()
     return args
 
@@ -22,11 +22,11 @@ def main(arguments):
 if __name__ == '__main__':
     arguments = argument_parser()
     main_rural = main(arguments)
-    if arguments.country == 'All':
+    if arguments.country is None:
         print(main_rural)
-        print('No country filter and exported to csv')
+        print('No country filter. Exported results to csv')
         main_rural.to_csv('data/results/analysed_rural_info.csv', index=False)
-    elif arguments.country != 'All':
+    elif arguments.country is not None:
         filtered_rural = main_rural[main_rural['Country'] == arguments.country]
         print(filtered_rural)
         print(f'Filtered by {arguments.country} and exported to csv')
