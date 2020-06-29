@@ -7,17 +7,27 @@ from p_analysis import m_analysis as man
 
 def argument_parser():
     parser = argparse.ArgumentParser(description='specify inputs')
-    parser.add_argument('-p', '--path', type=str, help='specify .db database path', required=True)
+    parser.add_argument('-c', '--country', type=str, help='filter by country or type All', required=True)
     args = parser.parse_args()
     return args
 
 
 def main(arguments):
-    rural = mac.acquire(arguments.path)
+    rural = mac.acquire()
     rural_processed = mwr.wrangling(rural)
-    print(man.analyze(rural_processed))
+    rural_analysed = man.analyze(rural_processed)
+    return rural_analysed
 
 
 if __name__ == '__main__':
     arguments = argument_parser()
-    main(arguments)
+    main_rural = main(arguments)
+    if arguments.country == 'All':
+        print(main_rural)
+        print('No country filter and exported to csv')
+        main_rural.to_csv('data/results/analysed_rural_info.csv', index=False)
+    elif arguments.country != 'All':
+        filtered_rural = main_rural[main_rural['Country'] == arguments.country]
+        print(filtered_rural)
+        print(f'Filtered by {arguments.country} and exported to csv')
+        filtered_rural.to_csv(f'data/results/{arguments.country}_analysed_rural_info.csv', index=False)
