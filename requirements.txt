@@ -1,0 +1,6 @@
+pandas
+sqlalchemy
+requests
+BeautifulSoup
+lxml
+argparse
