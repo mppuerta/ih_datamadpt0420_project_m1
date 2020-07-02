@@ -1,4 +1,4 @@
-# Ironhack Data Analyrics Module 1 Project README file
+# Ironhack Data Analyrics Module 1 Project
 
 Survey answers Pipeline showing quantity and percentage of respondents per country, job and living area.
 
@@ -7,7 +7,7 @@ Survey answers Pipeline showing quantity and percentage of respondents per count
 ### :computer: **Technology stack**
 Python
 
-### :boom: **Core technical concepts and inspiration**
+### :boom: **Core technical concepts**
 Reporting tool to analyze survey results.
 
 It will generate a .csv updated every time the script runs.
