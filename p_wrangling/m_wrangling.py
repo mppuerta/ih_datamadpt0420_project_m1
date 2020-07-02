@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
+
 # Function to build the API and make requests. Input: string, job code. Output: string, job name.
 def response_api(job_code):
     return requests.get(f'http://api.dataatwork.org/v1/jobs/{job_code}').json().get('title')
@@ -11,9 +12,10 @@ def response_api(job_code):
 # job codes, its values are job names it iterates over the column.
 def jobs_column(rural):
     print('Cleaning Job_name column...')
-    job_codes_list = list(rural['Job_name'].dropna().unique())
+    job_codes_list = list(rural['Job_name'].unique())
     jobs_dict = {job: response_api(job) for job in job_codes_list}
-    rural['Job_name'] = rural['Job_name'].apply(lambda job: jobs_dict.get(job))
+    rural['Job_name'] = rural['Job_name'].apply(
+        lambda job: jobs_dict.get(job) if job is not None else 'Unemployed/NoData')
     print('Job_name clean')
     return rural
 
@@ -21,10 +23,9 @@ def jobs_column(rural):
 # Function to clean rural column. The aim is to get only two values: 'rural' or 'urban'.
 def rural_column(rural):
     print('Cleaning Rural column...')
-    rural['Rural'] = rural['Rural'].str.lower()
-    rural['Rural'] = rural['Rural'].str.replace('city', 'urban')\
-        .replace('non-rural', 'urban')\
-        .replace('countryside', 'rural')\
+    rural['Rural'] = rural['Rural'].str.lower().replace('city', 'urban') \
+        .replace('non-rural', 'urban') \
+        .replace('countryside', 'rural') \
         .replace('country', 'rural')
     print('Rural column clean')
     return rural
@@ -59,11 +60,9 @@ def countries_clean(rural):
 
 
 def wrangling(rural):
-    rural_jobs_clean = jobs_column(rural)
+    rural_countries_clean = countries_clean(rural)
+    rural_jobs_clean = jobs_column(rural_countries_clean)
     rural_rural_clean = rural_column(rural_jobs_clean)
-    rural_countries_clean = countries_clean(rural_rural_clean)
-    rural_countries_clean.to_csv('data/processed/clean_rural_info.csv', index=False)
+    rural_rural_clean.to_csv('data/processed/clean_rural_info.csv', index=False)
     print('Processed data exported to csv')
-    return rural_countries_clean
-
-
+    return rural_rural_clean
