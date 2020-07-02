@@ -40,7 +40,7 @@ def countries_dict():
     return table_dict
 
 
-# Function to clean the rural column.
+# Function to clean the countries column.
 def countries_clean(rural):
     print('Cleaning countries column...')
     countr_dict = countries_dict()

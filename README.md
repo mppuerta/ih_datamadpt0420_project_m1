@@ -1,4 +1,4 @@
-# Ironhack Data Analyrics Module 1 Project
+# Ironhack Data Analytics Module 1 Project
 
 Survey answers Pipeline showing quantity and percentage of respondents per country, job and living area.
 
